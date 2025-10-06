@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Room Management</h2>
+
+    <!-- Add Room Form -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-primary text-white">Add Room</div>
+        <div class="card-body">
+            <form th:action="@{/admin/rooms/save}" method="post">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Room Number</label>
+                        <input type="text" name="roomNumber" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Room Type</label>
+                        <select name="type" class="form-select" required>
+                            <option value="general">General</option>
+                            <option value="semi_private">Semi-Private</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="/admin/dashboard" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-primary">Add Room</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rooms Table -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">All Rooms</div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Room Type</th>
+                        <th>Occupied</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="room : ${rooms}">
+                        <td th:text="${room.roomNumber}"></td>
+                        <td th:text="${room.type}"></td>
+                        <td th:text="${room.occupied}"></td>
+                        
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(rooms)}">
+                        <td colspan="4" class="text-center">No rooms added yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
